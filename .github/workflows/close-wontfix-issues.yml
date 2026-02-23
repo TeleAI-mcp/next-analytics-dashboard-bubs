@@ -1,0 +1,16 @@
+name: Close wontfix issues
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  close-wontfix:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'wontfix'
+    steps:
+      - name: Close issue
+        run: |
+          gh issue close ${{ github.event.issue.number }} --reason "not planned"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
